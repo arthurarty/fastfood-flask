@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
+from flask_sqlalchemy import SQLAlchemy
 load_dotenv()
 
 
@@ -8,8 +9,13 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY=os.getenv('SECRET_KEY'),
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        SQLALCHEMY_DATABASE_URI='postgres://postgres:qwe@localhost:5432/fastfood',
+        SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
+    from .model import db
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -24,8 +30,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/hello')
-    def hello_world():
-        return 'Hello, World!'
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app
