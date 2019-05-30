@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from app import db
 
 
 class User(db.Model):
     """User model creates user given a password and email."""
+
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     password = db.Column(db.String(), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)

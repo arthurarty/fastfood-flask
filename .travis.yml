@@ -1,0 +1,11 @@
+language: python
+
+services:
+  - postgres
+
+before_script:
+- pip3 install -r requirements.txt
+- psql -c 'create database fastfood;' -U postgres
+
+script:
+  - pytest
