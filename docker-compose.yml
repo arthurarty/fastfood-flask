@@ -5,9 +5,11 @@ services:
     image: postgres
     ports:
       - "5433:5432"
+  test_db:
+    image: postgres
   web:
     build: .
-    command: flask run --host=0.0.0.0
+    command: python run.py
     volumes:
       - .:/FASTFOOD-FLASK
     ports:

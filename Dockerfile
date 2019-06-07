@@ -1,6 +1,6 @@
 FROM python:3.6
-WORKDIR /FASTFOOD-FLASK
-COPY . /FASTFOOD-FLASK
+WORKDIR /fastfood-flask
+COPY . /fastfood-flask
 RUN pip install -r requirements.txt
-ENV FLASK_APP=flaskr
+ENV FLASK_APP=app
 ENV FLASK_ENV=development
