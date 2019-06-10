@@ -30,3 +30,8 @@ docker exec -it <app-container-name> coverage run -m pytest -v
 docker exec -it <app-container-name> coverage report
 docker exec -it <app-container-name> converage html
 ```
+
+Stop application
+```
+docker-compose stop
+```
