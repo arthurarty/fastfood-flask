@@ -8,4 +8,6 @@ before_script:
 - psql -c 'create database fastfood;' -U postgres
 
 script:
-  - pytest
+  - pytest -v
+  - coverage run -m pytest
+  - coverage report
