@@ -29,3 +29,12 @@ class MenuTestCase(BaseTest):
             self.client, '/menu/', menu_item, self.token)
         self.assertEqual(res.status_code, 401)
         self.assertIn(b'Unauthorized action', res.data)
+
+    def test_get_menu(self):
+        """Test API returns menu list"""
+        res = post_json_header(
+            self.client, '/menu/', menu_item, self.admin_token)
+        res = self.client().get(
+            '/menu/', headers={'Authorization': 'Bearer ' + self.token})
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(b'pilau_12', res.data)
