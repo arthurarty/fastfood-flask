@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from .models import User
+from .models.user import User
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -28,7 +28,7 @@ def login():
     password = request_data['password']
     user = User.query.filter_by(email=email).first()
     if (user is not None) and check_password_hash(user.password, password):
-        access_token = create_access_token(identity=email)
+        access_token = create_access_token(identity=user.email)
         return jsonify(
             message="Login Successful", token=access_token
             ), 200

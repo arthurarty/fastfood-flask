@@ -1,4 +1,3 @@
-import os
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 from instance.config import app_config
@@ -12,9 +11,10 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
     db.init_app(app)
-    jwt = JWTManager(app)
+    JWTManager(app)
 
-    from . import auth
+    from . import auth, menu
     app.register_blueprint(auth.bp)
+    app.register_blueprint(menu.bp)
 
     return app

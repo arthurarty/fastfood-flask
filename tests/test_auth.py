@@ -1,12 +1,10 @@
-import unittest
-import json
 from . import post_json
 from .base_test import BaseTest
 from .sample_data import user_1, wrong_user_password
 
 
-class FastfoodTestCase(BaseTest):
-    """This class represents the Fast Food test case"""
+class AuthTestCase(BaseTest):
+    """This class tests auth"""
 
     def test_user_createion(self):
         """Test API can create user (POST request)"""
