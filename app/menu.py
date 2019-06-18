@@ -22,3 +22,20 @@ def create():
             return jsonify(message=f"{required_field} is missing"), 400
     menu_item.save()
     return jsonify(message=f"Menu item {menu_item.name} has been added"), 201
+
+
+@bp.route('/', methods=['GET'])
+@jwt_required
+def return_menu():
+    """Return entire menu"""
+    menu_items = Menu.query.all()
+    entire_menu = []
+    for menu_item in menu_items:
+        obj = {
+            'id': menu_item.id,
+            'name': menu_item.name,
+            'price': menu_item.price,
+            'description': menu_item.description
+        }
+        entire_menu.append(obj)
+    return jsonify(menu_items=entire_menu), 200
