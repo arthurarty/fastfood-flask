@@ -1,6 +1,6 @@
 from . import post_json
 from .base_test import BaseTest
-from .sample_data import user_1, wrong_user_password
+from .sample_data.auth import user_1, wrong_user_password
 
 
 class AuthTestCase(BaseTest):

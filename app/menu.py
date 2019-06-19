@@ -39,3 +39,17 @@ def return_menu():
         }
         entire_menu.append(obj)
     return jsonify(menu_items=entire_menu), 200
+
+
+@bp.route('/<int:menu_id>/', methods=['GET'])
+@jwt_required
+def return_menu_item(menu_id):
+    """Return single menu item of specified id"""
+    menu_item = Menu.find(int(menu_id))
+    menu_obj = {
+        'id': menu_item.id,
+        'name': menu_item.name,
+        'price': menu_item.price,
+        'description': menu_item.description
+    }
+    return jsonify(menu_item=menu_obj), 200

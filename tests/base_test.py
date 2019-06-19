@@ -2,6 +2,7 @@ import unittest
 
 from app import create_app, db
 from app.models.user import User
+from app.models.menu import Menu
 
 from . import get_token, post_json
 
@@ -33,6 +34,12 @@ class BaseTest(unittest.TestCase):
             user_query = User.query.filter_by(email=admin_email).first()
             user_query.admin = True
             user_query.save()
+
+    def create_menu(self):
+        with self.app.app_context():
+            menu_item = Menu('chi', 4500, 'everything everything')
+            menu_item.save()
+            return menu_item.id
 
     def login_admin_user(self, admin_user):
         """Login an admin user"""
