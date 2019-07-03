@@ -1,6 +1,7 @@
 from . import post_json_header
 from .base_test import BaseTest
-from .sample_data import menu_item, incomplete_menu, user_1, admin_user
+from .sample_data.auth import admin_user, user_1
+from .sample_data.menus import menu_item, incomplete_menu
 
 
 class MenuTestCase(BaseTest):

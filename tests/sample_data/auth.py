@@ -12,13 +12,3 @@ wrong_user_password = {
     'email': 'test@example.com',
     'password': 'example12'
 }
-
-menu_item = {
-    'name': 'pilau_12',
-    'price': 45000,
-    'description': 'this is food',
-}
-
-incomplete_menu = {
-    'name': 'pilau'
-}

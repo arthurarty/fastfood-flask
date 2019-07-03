@@ -13,8 +13,9 @@ def create_app(config_name):
     db.init_app(app)
     JWTManager(app)
 
-    from . import auth, menu
+    from . import auth, menu, order
     app.register_blueprint(auth.bp)
     app.register_blueprint(menu.bp)
+    app.register_blueprint(order.bp)
 
     return app
