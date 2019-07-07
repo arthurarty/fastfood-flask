@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#rebuild web to include new changes
+docker-compose build web
+
+#run containers
+docker-compose up -d
+
+#run tests
+docker exec -it fastfood-flask_web_1 pytest

@@ -28,11 +28,33 @@ class OrderTestCase(BaseTest):
         self.assertIn(b'not found', res.data)
 
     def test_string_input(self):
+        """Test api does not allow string input for order"""
         res = post_json_header(
             self.client, '/orders/', order_strings, self.token)
         self.assertEqual(res.status_code, 400)
 
     def test_incomplete_order(self):
+        """Test orders input handles incomplete orders"""
         res = post_json_header(
             self.client, '/orders/', incomplete_order, self.token)
         self.assertEqual(res.status_code, 400)
+
+    def test_return_orders(self):
+        """Test orders endpoint returns orders when accessed by admin"""
+        res = post_json_header(
+            self.client, '/orders/', create_order(
+                self.create_menu()), self.token)
+        res = self.client().get(
+            '/orders/', headers={
+                'Authorization': 'Bearer ' + self.admin_token})
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(b'order_list', res.data)
+
+    def test_unauthorized_access_orders(self):
+        """Ensures /orders endpoint not accessable by users"""
+        res = post_json_header(
+            self.client, '/orders/', create_order(
+                self.create_menu()), self.token)
+        res = self.client().get(
+            '/orders/', headers={'Authorization': 'Bearer ' + self.token})
+        self.assertEqual(res.status_code, 401)
