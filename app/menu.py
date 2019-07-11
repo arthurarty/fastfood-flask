@@ -31,13 +31,13 @@ def return_menu():
     menu_items = Menu.query.all()
     entire_menu = []
     for menu_item in menu_items:
-        obj = {
+        menu_dict = {
             'id': menu_item.id,
             'name': menu_item.name,
             'price': menu_item.price,
             'description': menu_item.description
         }
-        entire_menu.append(obj)
+        entire_menu.append(menu_dict)
     return jsonify(menu_items=entire_menu), 200
 
 
@@ -46,10 +46,10 @@ def return_menu():
 def return_menu_item(menu_id):
     """Return single menu item of specified id"""
     menu_item = Menu.find(int(menu_id))
-    menu_obj = {
+    menu_dict = {
         'id': menu_item.id,
         'name': menu_item.name,
         'price': menu_item.price,
         'description': menu_item.description
     }
-    return jsonify(menu_item=menu_obj), 200
+    return jsonify(menu_item=menu_dict), 200

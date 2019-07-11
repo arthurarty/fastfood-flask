@@ -38,4 +38,4 @@ class MenuTestCase(BaseTest):
         res = self.client().get(
             '/menu/', headers={'Authorization': 'Bearer ' + self.token})
         self.assertEqual(res.status_code, 200)
-        self.assertIn(b'pilau_12', res.data)
+        self.assertIn(b'menu_items', res.data)

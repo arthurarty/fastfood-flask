@@ -34,3 +34,22 @@ def create_order():
         return jsonify(
             error=f"Menu item {input_data['menu_id']} not found"), 404
     return jsonify(message=f"Order posted"), 201
+
+
+@bp.route('/', methods=['GET'])
+@jwt_required
+@admin_required
+def get_all_orders():
+    """Method to return all orders for the admin"""
+    order_items = Order.query.all()
+    order_list = []
+    for order_item in order_items:
+        order_dict = {
+            'id': order_item.id,
+            'menu_id': order_item.menu_id,
+            'quantity': order_item.quantity,
+            'status': order_item.status,
+            'date_created': order_item.date_created
+        }
+        order_list.append(order_dict)
+    return jsonify(order_list=order_list), 200
