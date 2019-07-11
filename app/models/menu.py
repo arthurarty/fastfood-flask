@@ -1,19 +1,15 @@
 from app import db
+from .time_stamp_mixin import TimestampMixin
 
 
-class Menu(db.Model):
-    """List of menu items avaliable"""
+class Menu(TimestampMixin, db.Model):
+    """Model for menu items"""
 
     __tablename__ = 'menus'
 
-    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(), nullable=False)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(
-        db.DateTime, default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp())
 
     def __repr__(self):
         return '<MenuItem %r>' % self.name
@@ -25,10 +21,4 @@ class Menu(db.Model):
 
     def save(self):
         """Save menu_item to db."""
-        db.session.add(self)
-        db.session.commit()
-
-    @staticmethod
-    def find(id):
-        """Find menu_item by id"""
-        return Menu.query.filter_by(id=id).first()
+        return self.add_to_session(db)
