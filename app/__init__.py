@@ -2,8 +2,9 @@ from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 from instance.config import app_config
 from flask_jwt_extended import JWTManager
+from .models.base import BaseModel
 
-db = SQLAlchemy()
+db = SQLAlchemy(model_class=BaseModel)
 
 
 def create_app(config_name):

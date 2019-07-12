@@ -26,10 +26,10 @@ def create_order():
         except KeyError:
             return jsonify(message=f"{input_field} is missing"), 400
     current_user = get_jwt_identity()
-    current_user_id = User.find(email=current_user)
+    current_user_obj = User.find(unique_field=current_user)
     new_order = Order(input_data['quantity'])
     try:
-        new_order.save(current_user_id, input_data['menu_id'])
+        new_order.save(current_user_obj, input_data['menu_id'])
     except IntegrityError:
         return jsonify(
             error=f"Menu item {input_data['menu_id']} not found"), 404
@@ -49,7 +49,7 @@ def get_all_orders():
             'menu_id': order_item.menu_id,
             'quantity': order_item.quantity,
             'status': order_item.status,
-            'date_created': order_item.date_created
+            'date_created': order_item.created
         }
         order_list.append(order_dict)
     return jsonify(order_list=order_list), 200
