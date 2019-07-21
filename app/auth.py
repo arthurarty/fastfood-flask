@@ -1,3 +1,5 @@
+import re
+
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -12,6 +14,11 @@ def register():
     """Registering a new user"""
     request_data = request.get_json()
     email = request_data['email']
+    reg = re.match(
+        '([a-zA-Z0-9]+)([.]*)([-]*)([a-zA-Z0-9]+)@{1}([a-z]+)\.([a-z]+)',
+        email)
+    if reg is None:
+        return jsonify(message="Invalid email address"), 401
     password = request_data['password']
     user = User(email, generate_password_hash(password))
     user.save()
