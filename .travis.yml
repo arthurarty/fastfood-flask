@@ -1,13 +1,16 @@
 language: python
 
 services:
-  - postgres
+  - postgresql
 
 before_script:
-- pip3 install -r requirements.txt
 - psql -c 'create database fastfood;' -U postgres
+- pip install -r requirements.txt
 
 script:
   - pytest -v
   - coverage run -m pytest
   - coverage report
+
+after_success:
+- coveralls
